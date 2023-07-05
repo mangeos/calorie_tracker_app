@@ -34,3 +34,54 @@ User --> "1..*" Calorie
 Calorie --> Product
 
 @enduml
+
+
+
+@startuml
+
+package "API Gateway" {
+  [API Gateway]
+}
+
+package "Product Management" {
+  [Product Service]
+  [Product Database]
+}
+
+package "Logging" {
+  [Logging Service]
+  [Logging Database]
+}
+
+package "Statistics and Reports" {
+  [Statistics Service]
+  [Statistics Database]
+}
+
+package "User Profiles" {
+  [Profile Service]
+  [Profile Database]
+}
+
+database "Data Storage" {
+  [Data Storage Database]
+}
+
+[User Interface] --> [API Gateway]: API Requests
+[API Gateway] --> [Product Service]: Product Information
+[API Gateway] --> [Logging Service]: Log Food
+[API Gateway] --> [Statistics Service]: View Statistics
+[API Gateway] --> [Profile Service]: User Profiles
+[API Gateway] --> [Data Storage Database]: Data Storage
+
+[Product Service] --> [Product Database]: Product Data
+[Logging Service] --> [Logging Database]: Logged Food Data
+[Logging Service] --> [Product Service]: Product Information
+[Statistics Service] --> [Logging Service]: Logged Food Data
+[Statistics Service] --> [Product Service]: Product Information
+[Statistics Service] --> [Statistics Database]: Statistics Data
+[Profile Service] --> [Profile Database]: Profile Data
+
+@enduml
+
+
