@@ -1,0 +1,36 @@
+@startuml
+
+class User {
+  - id : int
+  - first_name : string
+  - last_name : string
+  - age : int
+  - email : string
+}
+
+class Product {
+  - id : int
+  - name : string
+  - calories : int
+}
+
+class Weight {
+  - id : int
+  - user_id : int
+  - weight : float
+  - date : date
+}
+
+class Calorie {
+  - id : int
+  - user_id : int
+  - product_id : int
+  - consumed : float
+  - date : date
+}
+
+User --> "1..*" Weight
+User --> "1..*" Calorie
+Calorie --> Product
+
+@enduml
