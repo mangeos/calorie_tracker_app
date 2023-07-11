@@ -1,28 +1,24 @@
 package com.example.user_service.models;
+
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.Data;
 
 import java.time.LocalDate;
 
-@Document(collection = "weight")
+@Document(collection = "weights")
+@TypeAlias("Weight")
+@Data
 public class Weight {
     @Id
     private String id;
-
 
     private String userId;
     private float weightValue;
     private LocalDate date;
 
-     // Standardkonstruktor (krävs av Spring Data MongoDB)
-    public Weight() {
-    }
-     // Konstruktor
-    public Weight(String userId, float weightValue, LocalDate date) {
-        this.userId = userId;
-        this.weightValue = weightValue;
-        this.date = date;
-    }
     // Getter för id
     public String getId() {
         return id;
