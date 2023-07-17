@@ -1,36 +1,13 @@
 import React from "react";
 import "./HomeComponent.css";
-import { Link } from "react-router-dom";
+import Header from "./Header";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 function HomeComponent() {
   return (
     <div className="container2">
-      <header>
-        <div className="header-content">
-          <p>Calorie-Tracker</p>
-          <nav>
-            <ul>
-              <li>
-                <Link to="#">Home</Link>
-              </li>
-              <li>
-                <Link to="/weight">Weight</Link>
-              </li>
-              <li>
-                <Link to="#">Progress</Link>
-              </li>
-              <li>
-                <Link to="#">Profile</Link>
-              </li>
-            </ul>
-          </nav>
-          <button className="logout-button">
-            <Link to="#">Logout</Link>
-          </button>
-        </div>
-      </header>
+      <Header />
       <div className="content">
         <section>
           <div className="card">

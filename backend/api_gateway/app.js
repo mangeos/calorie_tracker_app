@@ -1,18 +1,16 @@
 const express = require("express");
 const axios = require("axios");
 const app = express();
-const rateLimit = require("express-rate-limit");
+/* const rateLimit = require("express-rate-limit"); */
 
 const cors = require("cors");
 
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:3001",
     credentials: true,
   })
 );
-
-const PRODUCT_SERVICE_URL = "http://localhost:8080"; // URL till produkt API-tjänsten
 
 /* const limiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 timme
@@ -34,6 +32,19 @@ const passport = require("passport");
 
 app.use(passport.initialize());
 
+// Denna delen skapar cookie, som skickas till frontenden vid ett senare tillfälle
+app.use(
+  require("express-session")({
+    secret: "keyboard cat",
+    resave: true,
+    name: "Calorie-Tracker",
+    saveUninitialized: true,
+    cookie: { maxAge: 60 * 60 * 1000 }, // 1 hour
+  })
+);
+
+app.use(passport.session());
+
 // Öppnar google-oauth
 require("./models/oauth");
 
@@ -54,13 +65,11 @@ app.use("/api/weights", weights);
 app.get(
   "/google/callback",
   passport.authenticate("google", {
-    session: false,
     failureRedirect: "http://localhost:3000/api/logout",
   }),
   async (req, res) => {
-    console.log(req.authInfo.token);
-    const token = req.authInfo.token;
-    res.redirect(`http://localhost:19000?token=${token}`);
+    console.log(req.user);
+    res.redirect(`http://localhost:3001/home`);
   }
 );
 
@@ -73,7 +82,7 @@ app.get("/api/logout", (req, res) => {
       res.status(500).send("Failed to logout");
       return;
     }
-    res.send("logout");
+    res.redirect(`http://localhost:3001`);
   });
 });
 

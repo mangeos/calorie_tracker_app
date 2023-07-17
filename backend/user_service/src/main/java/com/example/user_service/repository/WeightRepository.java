@@ -13,4 +13,6 @@ import java.util.Optional;
 public interface WeightRepository extends MongoRepository<Weight, String> {
 
     List<Weight> deleteWeightByUserId(String userId);
+
+    List<Weight> findAllByUserId(String userId);
 }

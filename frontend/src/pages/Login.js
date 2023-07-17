@@ -1,8 +1,7 @@
 import React from "react";
+import LoginForm from "./../components/LoginForm";
 
-import HomeComponent from "../components/HomeComponent";
-
-const Home = () => {
+const Login = () => {
   // vid ett knapptryck så ska det scollas ner automatiskt till den rubriken på sidan.
   /*   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
@@ -13,9 +12,9 @@ const Home = () => {
 
   return (
     <div>
-      <HomeComponent />
+      <LoginForm />
     </div>
   );
 };
 
-export default Home;
+export default Login;
