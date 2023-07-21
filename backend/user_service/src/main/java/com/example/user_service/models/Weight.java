@@ -6,8 +6,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 
-import java.time.LocalDate;
-
 @Document(collection = "weights")
 @TypeAlias("Weight")
 @Data
@@ -17,7 +15,7 @@ public class Weight {
 
     private String userId;
     private float weightValue;
-    private LocalDate date;
+    private String date;
 
     // Getter för id
     public String getId() {
@@ -50,12 +48,12 @@ public class Weight {
     }
 
     // Getter för date
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
     // Setter för date
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

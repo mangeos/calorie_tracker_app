@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  api_gateway:
+    build: ./backend/api_gateway/
+    ports:
+      - "3000:3000"
+    networks:
+      - my_network
+
+  user_service:
+    build: ./path/till/din/api
+    ports:
+      - "3000:3000"
+    networks:
+      - my_network
+
+  frontend:
+    build: ./path/till/din/frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - api # Sätt frontend-tjänsten som beroende av API-tjänsten
+    networks:
+      - my_network
+
+  # mysql:
+  #  image: mysql:latest
+  # environment:
+  #  MYSQL_ROOT_PASSWORD: your_mysql_root_password
+  # MYSQL_DATABASE: your_mysql_database
+  # MYSQL_USER: your_mysql_user
+  # MYSQL_PASSWORD: your_mysql_password
+  # networks:
+  #  - my_network
+
+  mongodb:
+    image: mongo:latest
+    #    environment:
+    #     MONGO_INITDB_ROOT_USERNAME: your_mongo_root_user
+    #    MONGO_INITDB_ROOT_PASSWORD: your_mongo_root_password
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge

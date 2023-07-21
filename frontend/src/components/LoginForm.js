@@ -15,7 +15,7 @@ const LoginForm = () => {
               fontWeight: "bold",
             }}
           >
-            <p style={{ color: "white" }}>Calorie</p>-Tracker
+            <span style={{ color: "white" }}>Calorie</span>-Tracker
           </p>
           <FaArrowRightLong style={{ fontSize: 400 }} />
         </div>
