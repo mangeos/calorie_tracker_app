@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Header from "./../components/Header";
 import "./Weight.css";
-
+import axios from "axios";
+import apiRequests from "./../api/api";
+import Footer from "./../components/Footer";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -13,26 +15,19 @@ import {
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
 function Weight() {
+  const apiUrl = "http://localhost:3001/api/weights"; // Api gateWay
   const [weight, setWeight] = useState([]);
   const data = {
-    labels: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Mar",
-      "Mar",
-      "Mar",
-      "Mar",
-      "Mar",
-      "Mar",
-      "Mar",
-      "Mar",
-      "Mar",
-    ],
+    labels: weight.map((element) => {
+      return element.date;
+    }),
+
     datasets: [
       {
-        labels: "daadas",
-        data: [3, 2, 1],
+        labels: "Weight History",
+        data: weight.map((element) => {
+          return element.weight;
+        }),
         backgroundColor: "black",
       },
     ],
@@ -44,40 +39,102 @@ function Weight() {
     },
     scales: {
       y: {
-        min: 3,
-        max: 8,
+        min: 60,
+        max: 100,
       },
     },
   };
-  const handleButtonClick = () => {
-    alert(
-      text.length > 0 ? text : weight.length > 0 ? weight[0].weightValue : ""
-    );
+
+  const checkIfDateAlreadyExists = (dateToCheck) => {
+    return weight.some((element) => {
+      // Här antar jag att datumen representeras som JavaScript Date-objekt i arrayen weight.
+      // Om det inte är fallet, justera jämförelsen här beroende på hur datumen är representerade.
+      return element.date === dateToCheck;
+    });
+  };
+
+  const handleButtonClick = async () => {
+    // Skapa ett nytt datumobjekt för dagens datum
+    const today = new Date();
+
+    // Konvertera datumet till "YYYY-MM-DD" format
+    const formattedDate = today.toISOString().slice(0, 10);
+
+    const postOrPutRequest = checkIfDateAlreadyExists(formattedDate);
+
+    if (!postOrPutRequest) {
+      alert(text.length > 0 ? text : weight.length > 0 ? weight[0].weight : "");
+
+      // Skapa det nya elementet med datumet
+      const newItemWithDate = {
+        weight:
+          text.length > 0 ? text : weight.length > 0 ? weight[0].weight : "",
+        date: formattedDate,
+      };
+
+      try {
+        await axios.post(apiUrl, newItemWithDate, { withCredentials: true });
+        /*  fetchDataFromApi(); // Hämta data på nytt efter POST för att visa den uppdaterade listan
+      setNewItem({
+        id: "",
+        vikt: "",
+        datum: "2023-02-22",
+      }); // Återställ formuläret efter POST */
+        const weightsFromTheServer = await apiRequests.getAllWeigts();
+        setWeight(weightsFromTheServer);
+      } catch (error) {
+        console.error("Error posting data to API:", error);
+      }
+    } else {
+      alert("datum finns redan registrerat");
+
+      // Skapa det nya elementet med datumet
+      const newItemWithDate = {
+        weight:
+          text.length > 0 ? text : weight.length > 0 ? weight[0].weight : "",
+        date: formattedDate,
+      };
+
+      try {
+        await axios.put(apiUrl, newItemWithDate, { withCredentials: true });
+        /*  fetchDataFromApi(); // Hämta data på nytt efter POST för att visa den uppdaterade listan
+      setNewItem({
+        id: "",
+        vikt: "",
+        datum: "2023-02-22",
+      }); // Återställ formuläret efter POST */
+        const weightsFromTheServer = await apiRequests.getAllWeigts();
+        setWeight(weightsFromTheServer);
+      } catch (error) {
+        console.error("Error posting data to API:", error);
+      }
+    }
   };
   useEffect(() => {
     const getWeight = async () => {
-      const weightsFromTheServer = await fetchWeight();
+      const weightsFromTheServer = await apiRequests.getAllWeigts();
       setWeight(weightsFromTheServer);
     };
 
     getWeight();
   }, []);
-
-  //fetch data weight
-  const fetchWeight = async () => {
-    const res = await fetch("http://localhost:3000/api/weights", {
-      credentials: "include",
-    });
-    const data = await res.json();
-
-    console.log(data);
-    return data;
-  };
   const [text, setText] = useState("");
 
   const handleInputChange = (event) => {
     setText(event.target.value);
   };
+
+  // Function to generate rows for the table
+  const renderTableRow = (value) => {
+    return (
+      <tr key={value.date}>
+        <td>{value.date}</td>
+        <td>{value.weight + "/kg"}</td>
+        <td>+2/kg</td>
+      </tr>
+    );
+  };
+
   return (
     <>
       <div className="container2">
@@ -97,15 +154,20 @@ function Weight() {
               >
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <p style={{ fontSize: "17px", fontWeight: "bold" }}>
-                    Start: 87 kg
+                    Start: {weight.length > 0 ? weight[0].weight : ""}
+                    /kg
                   </p>
                   <br></br>
                   <p style={{ fontSize: "17px", fontWeight: "bold" }}>
-                    Aktuell: 87 kg
+                    Aktuell:
+                    {weight.length > 0
+                      ? " " + weight[weight.length - 1].weight
+                      : ""}
+                    /kg
                   </p>
                   <br></br>
                   <p style={{ fontSize: "17px", fontWeight: "bold" }}>
-                    Mål: 87 kg
+                    Mål: 75 kg
                   </p>
                 </div>
                 <div>
@@ -128,7 +190,7 @@ function Weight() {
                       text.length > 0
                         ? text
                         : weight.length > 0
-                        ? weight[0].weightValue
+                        ? weight[weight.length - 1].weightValue
                         : ""
                     }
                     onChange={handleInputChange}
@@ -157,24 +219,24 @@ function Weight() {
               </div>
             </div>
           </section>
+
           <section>
-            <div className="card">
-              <div style={{ width: 200, height: 200 }}>
-                {weight.map((element) => {
-                  return <p key={element.id}>{element.weight}/kg</p>;
-                })}
-              </div>
-            </div>
-          </section>
-          <section className="section-bottom">
             <div className="card">
               <Line data={data} options={options}></Line>
             </div>
           </section>
+          <section className="section-bottom">
+            <div className="card">
+              <div style={{ width: 300 }}>
+                <h2>Data Table</h2>
+                <table>
+                  <tbody>{weight.map((value) => renderTableRow(value))}</tbody>
+                </table>
+              </div>
+            </div>
+          </section>
         </div>
-        <footer>
-          <p>© 2023 Calorie-Tracker</p>
-        </footer>
+        <Footer />
       </div>
     </>
   );

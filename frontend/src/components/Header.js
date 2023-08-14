@@ -4,7 +4,9 @@ function Header() {
   return (
     <header>
       <div className="header-content">
-        <p>Calorie-Tracker</p>
+        <p>
+          Calorie<span style={{ color: "black" }}>-Tracker</span>
+        </p>
         <nav>
           <ul>
             <li>
@@ -13,16 +15,16 @@ function Header() {
             <li>
               <Link to="/weight">Weight</Link>
             </li>
-            <li>
+            {/*   <li>
               <Link to="#">Progress</Link>
             </li>
             <li>
               <Link to="#">Profile</Link>
-            </li>
+            </li> */}
           </ul>
         </nav>
         <button className="logout-button">
-          <Link to="http://localhost:3000/api/logout">Logout</Link>
+          <Link to="http://localhost:3001/api/logout">Logout</Link>
         </button>
       </div>
     </header>

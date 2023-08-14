@@ -39,7 +39,7 @@ const LoginForm = () => {
     // Logik för att validera och skicka inloggningsuppgifter
 
     // Make a request for a user with a given ID
-    window.location.href = "http://localhost:3000/api/login";
+    window.location.href = "http://localhost:3001/api/login";
   }
 };
 

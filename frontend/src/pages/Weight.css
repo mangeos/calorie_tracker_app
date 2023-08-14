@@ -1,32 +1,15 @@
-.table-container {
-  width: 100%;
-  margin-bottom: 20px;
-}
+/* tableStyles.css */
 
-.table-container table {
-  width: 100%;
+table {
   border-collapse: collapse;
-  font-family: Arial, sans-serif;
+  width: 100%;
+  margin-top: 20px;
 }
 
-.table-container th,
-.table-container td {
-  padding: 10px;
-  border: 1px solid #ddd;
-}
-
-.table-container th {
-  background-color: #f5f5f5;
-  font-weight: bold;
-  text-align: left;
-}
-
-.table-container tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.table-container tbody tr:hover {
-  background-color: #e9e9e9;
+th,
+td {
+  border-bottom: 1px solid #ccc;
+  padding: 8px;
 }
 
 .custom-button {
