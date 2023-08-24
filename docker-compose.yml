@@ -2,25 +2,25 @@ version: "3.8"
 
 services:
   api_gateway:
-    build: ./backend/api_gateway/
+    build: ./backend/api_gateway
     ports:
       - "3000:3000"
     networks:
       - my_network
 
   user_service:
-    build: ./path/till/din/api
+    build: ./backend/user_service
     ports:
-      - "3000:3000"
+      - "8080:8080"
     networks:
       - my_network
 
   frontend:
-    build: ./path/till/din/frontend
+    build: ./frontend
     ports:
-      - "80:80"
+      - "3001:3001"
     depends_on:
-      - api # Sätt frontend-tjänsten som beroende av API-tjänsten
+      - api_gateway # Sätt frontend-tjänsten som beroende av API-tjänsten
     networks:
       - my_network
 

@@ -14,8 +14,9 @@ public class Weight {
     private String id;
 
     private String userId;
-    private float weightValue;
     private String date;
+    private double weightValue;
+    private double weightGoal;
 
     // Getter för id
     public String getId() {
@@ -38,12 +39,12 @@ public class Weight {
     }
 
     // Getter för weightValue
-    public float getWeight() {
+    public double getWeight() {
         return weightValue;
     }
 
     // Setter för weightValue
-    public void setWeight(float weightValue) {
+    public void setWeight(double weightValue) {
         this.weightValue = weightValue;
     }
 
@@ -55,5 +56,15 @@ public class Weight {
     // Setter för date
     public void setDate(String date) {
         this.date = date;
+    }
+
+    // Getter för weightGoal
+    public double getWeightGoal() {
+        return weightGoal;
+    }
+
+    // Setter för weightGoal
+    public void setWeightGoal(double weightGoal) {
+        this.weightGoal = weightGoal;
     }
 }

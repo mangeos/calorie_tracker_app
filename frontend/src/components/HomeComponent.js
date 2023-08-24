@@ -1,10 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import "./HomeComponent.css";
 import Header from "./Header";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 function HomeComponent() {
+  const [items, setItems] = useState([]);
+  const [inputProduct, setInputProduct] = useState("");
+  const [inputCalories, setInputCalories] = useState("");
+
+  const handleProductChange = (event) => {
+    setInputProduct(event.target.value);
+  };
+
+  const handleCaloriesChange = (event) => {
+    // The Math.max() static method returns the largest of the numbers given
+    const newCaloriesValue = Math.max(0, event.target.value); // Ensure the value is not less than 0
+    setInputCalories(newCaloriesValue);
+  };
+
+  const handleAddItem = () => {
+    if (inputProduct.trim() !== "") {
+      const newItem = {
+        product: inputProduct,
+        calories: inputCalories,
+      };
+      setItems([...items, newItem]);
+      setInputProduct("");
+      setInputCalories("");
+      console.log(items);
+    }
+  };
+
+  const handleDeleteItem = (index) => {
+    const updatedItems = items.filter((_, i) => i !== index);
+    setItems(updatedItems);
+  };
+
   return (
     <div className="container2">
       <Header />
@@ -14,12 +46,11 @@ function HomeComponent() {
             <div style={{ width: 200, height: 200 }}>
               <CircularProgressbar
                 value={50}
-                text={
-                  <tspan style={{ display: "flex", flexDirection: "row" }}>
-                    <tspan>adada</tspan>
-                    <tspan>adada</tspan>
-                  </tspan>
-                }
+                // reduce multiplicerar alla nummer i en array och returnerar ett nummer
+                text={`${items.reduce(
+                  (total, item) => total + parseInt(item.calories),
+                  0
+                )} calories`}
                 styles={buildStyles({
                   // Rotation of path and trail, in number of turns (0-1)
                   /*     rotation: 0.25, */
@@ -48,12 +79,36 @@ function HomeComponent() {
         </section>
         <section>
           <div className="card">
-            <p>Testar</p>
+            <h1>Product and Calories Tracker</h1>
+            <div>
+              <input
+                type="text"
+                value={inputProduct}
+                onChange={handleProductChange}
+                placeholder="Enter product name"
+              />
+              <input
+                type="number"
+                value={inputCalories}
+                onChange={handleCaloriesChange}
+                placeholder="Enter calories"
+              />
+              <button onClick={handleAddItem}>Add</button>
+            </div>
           </div>
         </section>
         <section className="section-bottom">
           <div className="card">
-            <p>Testar</p>
+            <ul>
+              {items.map((item, index) => (
+                <li key={index}>
+                  <strong>{item.product}</strong> - {item.calories} calories
+                  <button onClick={() => handleDeleteItem(index)}>
+                    Delete
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       </div>

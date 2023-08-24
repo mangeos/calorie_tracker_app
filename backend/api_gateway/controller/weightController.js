@@ -27,14 +27,37 @@ const weightController = {
     }
   },
 
-  getBikeController: async (req, res, next) => {
-    let id = req.params.id;
-
+  postNewWeight: async (req, res, next) => {
+    // Skapa det nya elementet med datumet
+    console.log(req.user.id);
+    const mergedObj = { ...req.body, userId: req.user.id };
+    console.log(mergedObj);
     try {
-      let getBike = await bikeService.getBikeById(id);
-      res.status(200).json(getBike);
+      await axios.post(
+        "http://localhost:8080/userservice.example.com/weight",
+        mergedObj
+      );
+      res.status("200").send("success");
     } catch (error) {
-      res.status(500).json({ error });
+      console.error("Error posting data to API:", error);
+      res.send("Error posting data to API:");
+    }
+  },
+  putWeight: async (req, res, next) => {
+    // Skapa det nya elementet med datumet
+    console.log("put!");
+    console.log(req.user.id);
+    const mergedObj = { ...req.body, userId: req.user.id };
+    console.log(mergedObj);
+    try {
+      await axios.put(
+        `http://localhost:8080/userservice.example.com/weight/${req.user.id}/${req.body.date}/${req.body.weight}`,
+        mergedObj
+      );
+      res.status("200").send("success");
+    } catch (error) {
+      console.error("Error posting data to API:", error);
+      res.send("Error posting data to API:");
     }
   },
 };

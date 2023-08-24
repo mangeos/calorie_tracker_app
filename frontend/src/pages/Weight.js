@@ -3,6 +3,7 @@ import Header from "./../components/Header";
 import "./Weight.css";
 import axios from "axios";
 import apiRequests from "./../api/api";
+import weightChanges from "./../utils/weight";
 import Footer from "./../components/Footer";
 import { Line } from "react-chartjs-2";
 import {
@@ -11,31 +12,32 @@ import {
   CategoryScale,
   LinearScale,
   PointElement,
-} from "chart.js";
+} from "chart.js/auto";
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
 function Weight() {
   const apiUrl = "http://localhost:3001/api/weights"; // Api gateWay
   const [weight, setWeight] = useState([]);
-  const data = {
-    labels: weight.map((element) => {
-      return element.date;
-    }),
-
+  const userData = {
+    labels: weight.map((element) => element.date),
     datasets: [
       {
-        labels: "Weight History",
-        data: weight.map((element) => {
-          return element.weight;
-        }),
-        backgroundColor: "black",
+        id: 1,
+        label: "Weight",
+        data: weight.map((element) => element.weight),
+        backgroundColor: ["green"],
       },
     ],
   };
 
   const options = {
     plugins: {
-      legend: true,
+      legend: {
+        display: true,
+        labels: {
+          color: "rgb(255, 99, 132)",
+        },
+      },
     },
     scales: {
       y: {
@@ -130,7 +132,10 @@ function Weight() {
       <tr key={value.date}>
         <td>{value.date}</td>
         <td>{value.weight + "/kg"}</td>
-        <td>+2/kg</td>
+        <td>
+          {weightChanges.getWeightChanges(weight[0].weight, value.weight)}
+          /kg
+        </td>
       </tr>
     );
   };
@@ -142,7 +147,7 @@ function Weight() {
         <div className="content">
           <section>
             <div className="card">
-              <p style={{ fontSize: "30px", fontWeight: "bold" }}>Min Vikt</p>
+              <p style={{ fontSize: "30px", fontWeight: "bold" }}>Weight</p>
               <div
                 style={{
                   display: "flex",
@@ -159,7 +164,7 @@ function Weight() {
                   </p>
                   <br></br>
                   <p style={{ fontSize: "17px", fontWeight: "bold" }}>
-                    Aktuell:
+                    Latest:
                     {weight.length > 0
                       ? " " + weight[weight.length - 1].weight
                       : ""}
@@ -167,12 +172,12 @@ function Weight() {
                   </p>
                   <br></br>
                   <p style={{ fontSize: "17px", fontWeight: "bold" }}>
-                    Mål: 75 kg
+                    Goal: 75 kg
                   </p>
                 </div>
                 <div>
                   <p style={{ fontSize: "17px", fontWeight: "bold" }}>
-                    Ange din vikt
+                    Insert your weight
                   </p>
                   <input
                     style={{
@@ -198,7 +203,7 @@ function Weight() {
                   <br></br>
                   <br></br>
                   <button className="custom-button" onClick={handleButtonClick}>
-                    SparaVikt
+                    SaveWeight
                   </button>
                 </div>
                 <div
@@ -209,11 +214,17 @@ function Weight() {
                   }}
                 >
                   <p style={{ fontSize: "17px", fontWeight: "bold" }}>
-                    Förändring: -8 kg
+                    Progress:
+                    {weight.length > 1
+                      ? weightChanges.getWeightChanges(
+                          weight[0].weight,
+                          weight[weight.length - 1].weight
+                        )
+                      : "0"}
                   </p>
                   <br></br>
                   <p style={{ fontSize: "17px", fontWeight: "bold" }}>
-                    Kvar: 2 kg
+                    Left: 2 kg
                   </p>
                 </div>
               </div>
@@ -222,7 +233,7 @@ function Weight() {
 
           <section>
             <div className="card">
-              <Line data={data} options={options}></Line>
+              <Line datasetIdKey="id" data={userData} options={options}></Line>
             </div>
           </section>
           <section className="section-bottom">

@@ -7,7 +7,7 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin: "http://localhost:3001",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
@@ -65,11 +65,11 @@ app.use("/api/weights", weights);
 app.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "http://localhost:3000/api/logout",
+    failureRedirect: "http://localhost:3001/api/logout",
   }),
   async (req, res) => {
     console.log(req.user);
-    res.redirect(`http://localhost:3001/home`);
+    res.redirect(`http://localhost:3000/home`);
   }
 );
 
@@ -82,7 +82,7 @@ app.get("/api/logout", (req, res) => {
       res.status(500).send("Failed to logout");
       return;
     }
-    res.redirect(`http://localhost:3001`);
+    res.redirect(`http://localhost:3000`);
   });
 });
 
@@ -149,7 +149,7 @@ app.delete("/api/products/:id", (req, res) => {
 });
 
 // Starta API Gateway
-const port = 3000; // Ange den port du vill lyssna på
+const port = 3001; // Ange den port du vill lyssna på
 app.listen(port, () => {
   console.log(`API Gateway är igång på port ${port}`);
 });

@@ -15,7 +15,7 @@ passport.use(
       clientID:
         "54683269931-o02rpbmmph41h85c44atmqndpsc0s2ht.apps.googleusercontent.com",
       clientSecret: "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",
-      callbackURL: "http://localhost:3000/google/callback",
+      callbackURL: "http://localhost:3001/google/callback",
     },
     async function (accessToken, refreshToken, profile, done) {
       // Använd Google-tokens attribut för att generera JWT-token
