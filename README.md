@@ -1,7 +1,5 @@
 # Weight & Calories Tracker App
 
-![App Screenshot](/images/screenshot.png)
-
 This is a comprehensive health tracking application designed to help users monitor their daily caloric intake and track their weight changes over time. The app consists of a frontend built with React and a microservice-based backend that utilizes both Node.js and Java. The backend is powered by MongoDB to store and manage user data.
 
 ## Features
