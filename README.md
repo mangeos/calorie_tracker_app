@@ -16,9 +16,9 @@ This is a comprehensive health tracking application designed to help users monit
 
 ## Screenshots
 
-![Adding Food](/images/screenshot_food.png)
+![Adding Food](/images/caloriesPic.png)
 
-![Tracking Weight](/images/screenshot_weight.png)
+![Tracking Weight](/images/weightPic.png)
 
 ## Backend Microservices
 
