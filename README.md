@@ -16,6 +16,8 @@ This is a comprehensive health tracking application designed to help users monit
 
 ## Screenshots
 
+![Login Page](/images/loginPic.png)
+
 ![Adding Food](/images/caloriesPic.png)
 
 ![Tracking Weight](/images/weightPic.png)
