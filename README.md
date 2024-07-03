@@ -47,4 +47,3 @@ This is a comprehensive health tracking application designed to help users monit
 - Allow users to set goals and receive insights.
 - **Store Products and Calories in the Database:** Enhance the backend to store and retrieve food products from the MongoDB database.
 
-Feel free to contribute and provide feedback!
