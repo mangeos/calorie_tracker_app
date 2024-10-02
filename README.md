@@ -1,16 +1,16 @@
-# Weight & Calories Tracker App
+# Vikt- och kalorispårningsapp
 
-This is a comprehensive health tracking application designed to help users monitor their daily caloric intake and track their weight changes over time. The app consists of a frontend built with React and a microservice-based backend that utilizes both Node.js and Java. The backend is powered by MongoDB to store and manage user data. The user log in securely using Google OAuth2 for a personalized experience.
+Projektet är skapat för att hjälpa användare att övervaka sitt dagliga kaloriintag och spåra sina viktförändringar över tid. Appen består av en frontend byggd med React och en mikrotjänstbaserad backend som använder både Node.js och Java spring boot. Backend drivs av MongoDB för att lagra och hantera användardata. Användare loggar in säkert med Google OAuth2 för en personlig upplevelse.
 
-## Features
+## Funktioner
 
-- Track daily caloric intake by adding foods and their calorie values.
-- Record weight measurements at regular intervals.
-- Visualize calorie and weight trends over time.
-- Backend built as a microservice using Node.js and Java.
-- Data storage and management using MongoDB.
-- Implement user authentication and personalized tracking.
-- **User Authentication:** Log in securely using Google OAuth2 for a personalized experience.
+- Spåra dagligt kaloriintag genom att lägga till livsmedel och deras kaloriinnehåll.
+- Registrera viktmätningar med jämna mellanrum.
+- Visualisera kalori- och vikttrender över tid.
+- Backend byggd som en mikrotjänst med Node.js och Java spring boot.
+- Databaslagring och hantering med MongoDB.
+- Implementera användarautentisering och personlig spårning.
+- **Användarautentisering:** Logga in säkert med Google OAuth2 för en personlig upplevelse.
 
 ## Screenshots
 
@@ -20,30 +20,24 @@ This is a comprehensive health tracking application designed to help users monit
 
 ![Tracking Weight](/images/weightPic.png)
 
-## Backend Microservices
+## Backend Mikrotjänster
 
-- Node.js Microservice: Handles food and calorie tracking.
-- Java Microservice: Manages weight tracking and trends.
-- Both microservices communicate with MongoDB for data storage.
+- **Node.js Mikrotjänst:** Hanterar mat- och kalorisökning.
+- **Java Mikrotjänst:** Hanterar viktregistrering.
+- Båda mikrotjänsterna kommunicerar med MongoDB för datalagring.
 
 ## Installation
 
-1. Clone the repository.
-2. Set up the Node.js and Java microservices (detailed instructions in respective directories).
-3. Start the microservices.
-4. Navigate to the project directory and run `npm install` for the React frontend.
-5. Run `npm start` to launch the frontend development server.
+1. Klona repositoryn.
+2. Sätt upp mikrotjänsterna för Node.js och Java.
+3. Starta mikrotjänsterna.
+4. Gå till projektkatalogen och kör npm install för React-frontenden.
+5. Kör npm start för att starta frontend-utvecklingsservern.
 
-## Technologies Used
+## Använda teknologier
 
-- React for the frontend.
-- Node.js and Express for the Node.js microservice.
-- Java for the Java microservice.
-- MongoDB for data storage and management.
-
-## Future Enhancements
-
-- Enhance data visualization with graphs and charts.
-- Allow users to set goals and receive insights.
-- **Store Products and Calories in the Database:** Enhance the backend to store and retrieve food products from the MongoDB database.
+- React för frontenden.
+- Node.js och Express för Node.js-mikrotjänsten.
+- Java spring boot för Java-mikrotjänsten.
+- MongoDB för datalagring och hantering.
 
